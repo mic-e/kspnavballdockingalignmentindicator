@@ -7,14 +7,14 @@ public class NavBallDockingAlignment : MonoBehaviour
 	private NavBall navBallBehaviour;
 	private GameObject indicator;
 
-	public void Start ()
+	public void Start()
 	{
 		//get navball object
 		GameObject navBall = GameObject.Find("NavBall");
 		Transform navBallVectorsPivotTransform = navBall.transform.FindChild("vectorsPivot");
 		navBallBehaviour = navBall.GetComponent<NavBall>();
 
-		//get indicator texture (use one of the maneuver thingies)
+		//get indicator texture (use the prograde marker, since it has a clear 'upwards' direction)
 		ManeuverGizmo maneuverGizmo = MapView.ManeuverNodePrefab.GetComponent<ManeuverGizmo>();
 		ManeuverGizmoHandle maneuverGizmoHandle = maneuverGizmo.handleNormal;
 		Transform transform = maneuverGizmoHandle.flag;
@@ -22,13 +22,13 @@ public class NavBallDockingAlignment : MonoBehaviour
 		Material maneuverTexture = renderer.sharedMaterial;
 
 		//create alignment indicator game object
-		indicator = Create2DObject (
+		indicator = Create2DObject(
 			name: "navballalignmentindicator",
-			size: 0.025f,
-			col: new Color (1f, 0f, 0),
+			size: 0.025f, //the same size as all other markers
+			col: new Color(1f, 0f, 0), //red
 			texture: maneuverTexture,
 			textureScale: Vector2.one / 3,
-			textureOffset: new Vector2 (0f / 3f, 2f / 3f),
+			textureOffset: new Vector2(0f / 3f, 2f / 3f), //all 9 navball markers are in this texture; the prograde marker is (0, 2).
 			parentTransform: navBallVectorsPivotTransform,
 			layer: 12 //the navball layer
 		);
@@ -100,7 +100,7 @@ public class NavBallDockingAlignment : MonoBehaviour
 
 	public void LateUpdate()
 	{
-		if (FlightGlobals.ready == false)
+		if(FlightGlobals.ready == false)
 			return;
 
 		if(FlightGlobals.fetch != null) {
@@ -120,7 +120,7 @@ public class NavBallDockingAlignment : MonoBehaviour
 					Vector3 v1 = Vector3.Cross(selfTransform.up, targetTransform.forward);
 					Vector3 v2 = Vector3.Cross(selfTransform.up, selfTransform.forward);
 					float ang = Vector3.Angle(v1, v2);
-					if (Vector3.Dot(selfTransform.up, Vector3.Cross(v1, v2)) < 0) {
+					if(Vector3.Dot(selfTransform.up, Vector3.Cross(v1, v2)) < 0) {
 						ang = -ang;
 					}
 					indicator.transform.rotation = Quaternion.Euler(90 + ang, 90, 270);
