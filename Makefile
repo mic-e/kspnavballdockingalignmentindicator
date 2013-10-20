@@ -7,7 +7,7 @@ $(DLL): $(SRC)
 	@test "$(KSP_DIR)"
 	dmcs -r:"$(KSP_DIR)/KSP_Data/Managed/Assembly-CSharp.dll" -r:"$(KSP_DIR)/KSP_Data/Managed/UnityEngine.dll" -t:library $(SRC) -out:$(DLL)
 
-install:
+install: $(DLL)
 	@test "$(KSP_DIR)" || echo 'You need to set $$KSP_DIR'
 	@test "$(KSP_DIR)"
 	cp $(DLL) "$(KSP_DIR)/KSP_Data"
@@ -23,4 +23,6 @@ clean:
 tgz: $(DLL)
 	tar cz license Makefile readme $(SRC) $(DLL) > $(TGZ)
 
-.PHONY: install uninstall clean tar
+all: $(DLL) $(TGZ)
+
+.PHONY: install uninstall clean all tgz
