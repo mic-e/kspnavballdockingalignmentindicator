@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [KSPAddon(KSPAddon.Startup.Flight, false)]
-public class NavBallDockingAlignment : MonoBehaviour
+public class NavBallDockingAlignmentIndicator : MonoBehaviour
 {
 	private NavBall navBallBehaviour;
 	private GameObject indicator;
@@ -44,7 +44,6 @@ public class NavBallDockingAlignment : MonoBehaviour
 		Transform parentTransform,
 		int layer)
 	{
-
 		GameObject o = new GameObject(name);
 		Mesh m = new Mesh();
 		MeshFilter meshFilter = o.AddComponent<MeshFilter>();
