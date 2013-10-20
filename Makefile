@@ -20,8 +20,10 @@ uninstall:
 clean:
 	rm -f $(DLL) $(TGZ)
 
-tgz: $(DLL)
+$(TGZ): $(DLL)
 	tar cz license Makefile readme $(SRC) $(DLL) > $(TGZ)
+
+tgz: $(TGZ)
 
 all: $(DLL) $(TGZ)
 
