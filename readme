@@ -1,0 +1,34 @@
+===== How to install ==============
+
+Copy NavBallDockingAlignmentIndicator.dll somewhere to the GameData folder in your KSP folder.
+
+===== How to use ==================
+
+Select a docking port as target.
+An additional red marker will appear, indicating the direction your docking port needs to face to be parallel to the target docking port.
+
+This mod is basically a light-weight version of NavyFish's Docking Port Alignment Indicator mod, using only a single marker on the NavBall instead of a whole new window.
+
+===== How to manually build =======
+
+Use the included Makefile (or an development environment, if you wish so)
+
+===== Changelog ===================
+
+v0, 2013-10-20, KSP 0.22:
+
+Initial release
+
+===== Credits =====================
+
+A big Thank you to NavyFish, creator of the awesome Docking Alignment Indicator mod, which gave me the whole Idea for this mod.
+
+http://kerbalspaceport.com/dock-align-indicator/
+
+An other huge Thank you goes to kitoban, creator of the Enhanced Navball mod, from which, being a bloody beginner at KSP modding, Unity and C#, I took a whole lot of code.
+
+http://kerbalspaceport.com/enhancednavball/
+
+===== License =====================
+
+This code is licensed under the GNU General Public License version 3, or, at your choice, any higher version.
