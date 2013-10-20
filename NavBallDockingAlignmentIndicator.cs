@@ -1,19 +1,13 @@
 ﻿using System;
 using UnityEngine;
-using System.IO;
 
 [KSPAddon(KSPAddon.Startup.Flight, false)]
 public class NavBallDockingAlignment : MonoBehaviour
 {
-    private NavBall navBallBehaviour;
+	private NavBall navBallBehaviour;
 	private GameObject indicator;
 
-	private void dbg (string msg)
-	{
-		File.AppendAllText("/tmp/dbg", msg + "\n");
-	}
-
-    public void Start ()
+	public void Start ()
 	{
 		//get navball object
 		GameObject navBall = GameObject.Find("NavBall");
@@ -38,75 +32,76 @@ public class NavBallDockingAlignment : MonoBehaviour
 			parentTransform: navBallVectorsPivotTransform,
 			layer: 12 //the navball layer
 		);
-    }
+	}
 
-    private GameObject Create2DObject(
+	private GameObject Create2DObject(
 		string name,
 		float size,
 		Color col,
 		Material texture,
-        Vector2 textureScale,
+		Vector2 textureScale,
 		Vector2 textureOffset,
-        Transform parentTransform,
+		Transform parentTransform,
 		int layer)
-    {
+	{
+
 		GameObject o = new GameObject(name);
-        Mesh m = new Mesh();
-        MeshFilter meshFilter = o.AddComponent<MeshFilter>();
-        o.AddComponent<MeshRenderer>();
+		Mesh m = new Mesh();
+		MeshFilter meshFilter = o.AddComponent<MeshFilter>();
+		o.AddComponent<MeshRenderer>();
 
-        const float uvize = 1f;
+		const float uvize = 1f;
 
-        Vector3 p0 = new Vector3(-size, 0, size);
-        Vector3 p1 = new Vector3(size, 0, size);
-        Vector3 p2 = new Vector3(-size, 0, -size);
-        Vector3 p3 = new Vector3(size, 0, -size);
+		Vector3 p0 = new Vector3(-size, 0, size);
+		Vector3 p1 = new Vector3(size, 0, size);
+		Vector3 p2 = new Vector3(-size, 0, -size);
+		Vector3 p3 = new Vector3(size, 0, -size);
 
-        m.vertices = new[]
-        {
-            p0, p1, p2,
-        	p1, p3, p2
-        };
+		m.vertices = new[]
+		{
+			p0, p1, p2,
+			p1, p3, p2
+		};
 
-        m.triangles = new[]
-        {
-        	0, 1, 2,
-            3, 4, 5
-        };
+		m.triangles = new[]
+		{
+			0, 1, 2,
+			3, 4, 5
+		};
 
-        Vector2 uv1 = new Vector2(0, 0);
-        Vector2 uv2 = new Vector2(uvize, uvize);
-        Vector2 uv3 = new Vector2(0, uvize);
-        Vector2 uv4 = new Vector2(uvize, 0);
+		Vector2 uv1 = new Vector2(0, 0);
+		Vector2 uv2 = new Vector2(uvize, uvize);
+		Vector2 uv3 = new Vector2(0, uvize);
+		Vector2 uv4 = new Vector2(uvize, 0);
 
-        m.uv = new[]{
-        	uv1, uv4, uv3,
-            uv4, uv2, uv3
-        };
-           
-        m.RecalculateNormals();
-        m.RecalculateBounds();
-        m.Optimize();
-            
-        meshFilter.mesh = m;
+		m.uv = new[]{
+			uv1, uv4, uv3,
+			uv4, uv2, uv3
+		};
+
+		m.RecalculateNormals();
+		m.RecalculateBounds();
+		m.Optimize();
+
+		meshFilter.mesh = m;
 
 		o.layer = layer;
-        o.transform.parent = parentTransform;
-        o.transform.localPosition = Vector3.zero;
-        o.transform.localRotation = Quaternion.Euler(90f, 180f, 0);
+		o.transform.parent = parentTransform;
+		o.transform.localPosition = Vector3.zero;
+		o.transform.localRotation = Quaternion.Euler(90f, 180f, 0);
 
-        o.renderer.sharedMaterial = new Material(texture);
-        o.renderer.sharedMaterial.mainTextureScale = textureScale;
-        o.renderer.sharedMaterial.mainTextureOffset = textureOffset;
-        o.renderer.sharedMaterial.color = col;
+		o.renderer.sharedMaterial = new Material(texture);
+		o.renderer.sharedMaterial.mainTextureScale = textureScale;
+		o.renderer.sharedMaterial.mainTextureOffset = textureOffset;
+		o.renderer.sharedMaterial.color = col;
 
 		return o;
-    }
+	}
 
-    public void LateUpdate()
-    {
-        if (FlightGlobals.ready == false)
-            return;
+	public void LateUpdate()
+	{
+		if (FlightGlobals.ready == false)
+			return;
 
 		if(FlightGlobals.fetch != null) {
 			if(FlightGlobals.fetch.VesselTarget != null) {
@@ -134,12 +129,12 @@ public class NavBallDockingAlignment : MonoBehaviour
 					indicator.SetActive(indicator.transform.localPosition.z > 0.0d);
 
 					return;
-				} 
+				}
 			}
 		}
 
 		//no docking port is currently selected
 		indicator.SetActive(false);
 		return;
-    }
+	}
 }
