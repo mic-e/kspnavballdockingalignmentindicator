@@ -1,6 +1,7 @@
 DLL=NavBallDockingAlignmentIndicator.dll
 SRC=NavBallDockingAlignmentIndicator.cs
 TGZ=NavBallDockingAlignmentIndicator.tar.gz
+ZIP=NavBallDockingAlignmentIndicator.zip
 
 $(DLL): $(SRC)
 	@test "$(KSP_DIR)" || echo 'You need to set $$KSP_DIR'
@@ -18,13 +19,17 @@ uninstall:
 	rm "$(KSP_DIR)/KSP_Data/$(DLL)"
 
 clean:
-	rm -f $(DLL) $(TGZ)
+	rm -f $(DLL) $(TGZ) $(ZIP)
 
 $(TGZ): $(DLL)
 	tar cz license Makefile readme $(SRC) $(DLL) > $(TGZ)
 
-tgz: $(TGZ)
+$(ZIP): $(DLL)
+	zip $(ZIP) license Makefile readme $(SRC) $(DLL)
 
-all: $(DLL) $(TGZ)
+tgz: $(TGZ)
+zip: $(ZIP)
+
+all: $(DLL) $(TGZ) $(ZIP)
 
 .PHONY: install uninstall clean all tgz
