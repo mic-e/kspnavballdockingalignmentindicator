@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using KSP.IO;
 
 [KSPAddon(KSPAddon.Startup.Flight, false)]
 public class NavBallDockingAlignmentIndicator : MonoBehaviour
@@ -9,6 +10,14 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 
 	public void Start()
 	{
+		PluginConfiguration cfg = KSP.IO.PluginConfiguration.CreateForType<NavBallDockingAlignmentIndicator>();
+		cfg.load();
+		Vector3 tmp = cfg.GetValue<Vector3>("alignmentmarkercolor", new Vector3(1f, 0f, 0f)); //default: red
+		Color alignmentmarkercolor = new Color(tmp.x, tmp.y, tmp.z);
+		Vector2 alignmentmarkertexture = cfg.GetValue<Vector2>("alignmentmarkertexture", new Vector2(0f, 2f)); //default: prograde marker
+		cfg.save();
+		float texturescalefactor = 1f / 3f;
+
 		//get navball object
 		GameObject navBall = GameObject.Find("NavBall");
 		Transform navBallVectorsPivotTransform = navBall.transform.FindChild("vectorsPivot");
@@ -25,10 +34,10 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 		indicator = Create2DObject(
 			name: "navballalignmentindicator",
 			size: 0.025f, //the same size as all other markers
-			col: new Color(1f, 0f, 0), //red
+			col: alignmentmarkercolor,
 			texture: maneuverTexture,
-			textureScale: Vector2.one / 3,
-			textureOffset: new Vector2(0f / 3f, 2f / 3f), //all 9 navball markers are in this texture; the prograde marker is (0, 2).
+			textureScale: Vector2.one * texturescalefactor,
+			textureOffset: alignmentmarkertexture * texturescalefactor,
 			parentTransform: navBallVectorsPivotTransform,
 			layer: 12 //the navball layer
 		);
