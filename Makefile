@@ -7,21 +7,26 @@ ZIP=$(NAME).zip
 
 SOURCES=license readme Makefile $(SRC)
 
-testkspdir:
+INSTALLDIR="$(KSP_DIR)"/GameData/$(NAME)
+
+$(DLL): $(SRC)
 	@test "$(KSP_DIR)" || echo 'You need to set $$KSP_DIR'
 	@test "$(KSP_DIR)"
-
-$(DLL): $(SRC) testkspdir
 	dmcs -r:"$(KSP_DIR)/KSP_Data/Managed/Assembly-CSharp.dll" -r:"$(KSP_DIR)/KSP_Data/Managed/UnityEngine.dll" -t:library $(SRC) -out:$(DLL)
 
-install: $(DLL) testkspdir
-	cp $(DLL) "$(KSP_DIR)/Plugins"
+install: $(DLL)
+	@test "$(KSP_DIR)" || echo 'You need to set $$KSP_DIR'
+	@test "$(KSP_DIR)"
+	mkdir -p "$(INSTALLDIR)"
+	cp $(DLL) "$(INSTALLDIR)"
 
-uninstall: testkspdir
-	rm "$(KSP_DIR)/Plugins/$(DLL)"
+uninstall:
+	@test "$(KSP_DIR)" || echo 'You need to set $$KSP_DIR'
+	@test "$(KSP_DIR)"
+	rm -r "$(INSTALLDIR)"
 
 clean:
-	rm -f $(DLL) $(TGZ) $(ZIP) $(NAME)
+	rm -rf $(DLL) $(TGZ) $(ZIP) $(NAME)
 
 $(TGZ): $(SOURCES) $(DLL)
 	tar cz $^ > $@
