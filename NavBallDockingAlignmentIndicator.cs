@@ -119,13 +119,13 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 					Transform selfTransform = FlightGlobals.ActiveVessel.ReferenceTransform;
 
 					//indicator position
-					Vector3 targetPortOutVector = targetTransform.up.normalized;
+					Vector3 targetPortOutVector = targetTransform.forward.normalized;
 					Vector3 targetPortInVector = -targetPortOutVector;
 					Vector3 rotatedTargetPortInVector = navBallBehaviour.attitudeGymbal * targetPortInVector;
 					indicator.transform.localPosition = rotatedTargetPortInVector * navBallBehaviour.progradeVector.localPosition.magnitude;
 
 					//indicator rotation
-					Vector3 v1 = Vector3.Cross(selfTransform.up, targetTransform.forward);
+					Vector3 v1 = Vector3.Cross(selfTransform.up, -targetTransform.up);
 					Vector3 v2 = Vector3.Cross(selfTransform.up, selfTransform.forward);
 					float ang = Vector3.Angle(v1, v2);
 					if(Vector3.Dot(selfTransform.up, Vector3.Cross(v1, v2)) < 0) {
