@@ -34,6 +34,11 @@ v2, 2013-12-18, KSP 0.23:
 
 Made marker color and texture manually configurable
 
+v3, 2014-05-10, KSP 0.23.5:
+
+Instead of just docking ports, all parts that provide targeting information
+are now supported. This is mostly relevant for other mods.
+
 ===== Github ======================
 
 https://github.com/mic-e/kspnavballdockingalignmentindicator
@@ -51,6 +56,8 @@ http://kerbalspaceport.com/dock-align-indicator/
 An other huge Thank you goes to kitoban, creator of the Enhanced Navball mod, from which, being a bloody beginner at KSP modding, Unity and C#, I took a whole lot of code.
 
 http://kerbalspaceport.com/enhancednavball/
+
+Credits for the v2->v3 update go to taniwha.
 
 ===== License =====================
 
