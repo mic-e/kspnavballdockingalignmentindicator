@@ -5,7 +5,7 @@ SRC=$(NAME).cs
 TGZ=$(NAME).tar.gz
 ZIP=$(NAME).zip
 
-SOURCES=license readme Makefile $(SRC)
+SOURCES=license readme.md Makefile $(SRC)
 
 INSTALLDIR="$(KSP_DIR)"/GameData/$(NAME)
 
@@ -37,7 +37,7 @@ $(ZIP): $(SOURCES) $(DLL)
 	cp $(DLL) $(NAME)/GameData/$(NAME)
 	mkdir -p $(NAME)/src
 	cp $(SOURCES) $(NAME)/src
-	cp readme $(NAME)/readme.txt
+	cp readme.md $(NAME)/readme.txt
 	zip --recurse-paths $@ $(NAME)
 
 tgz: $(TGZ)
