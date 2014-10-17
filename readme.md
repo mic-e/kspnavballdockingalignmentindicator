@@ -42,6 +42,10 @@ v4, 2014-07-18, KSP 0.24:
 
 Updated for KSP 0.24, changed readme file
 
+v5, 2014-10-17, KSP 0.25:
+
+Updated for KSP 0.25
+
 ### URLs
 
 - [Github](https://github.com/mic-e/kspnavballdockingalignmentindicator)
