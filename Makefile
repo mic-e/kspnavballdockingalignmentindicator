@@ -38,7 +38,7 @@ $(ZIP): $(SOURCES) $(DLL)
 	mkdir -p $(NAME)/src
 	cp $(SOURCES) $(NAME)/src
 	cp readme.md $(NAME)/readme.txt
-	zip --recurse-paths $@ $(NAME)
+	cd $(NAME) && zip --recurse-paths ../$@ *
 
 tgz: $(TGZ)
 zip: $(ZIP)

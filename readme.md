@@ -46,6 +46,10 @@ v5, 2014-10-17, KSP 0.25:
 
 Updated for KSP 0.25
 
+v6, 2014-12-19, KSP 0.90:
+
+Updated for KSP 0.90, changed ZIP folder structure
+
 ### URLs
 
 - [Github](https://github.com/mic-e/kspnavballdockingalignmentindicator)
