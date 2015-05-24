@@ -12,34 +12,34 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 	{
 		PluginConfiguration cfg = KSP.IO.PluginConfiguration.CreateForType<NavBallDockingAlignmentIndicator>();
 		cfg.load();
-		Vector3 tmp = cfg.GetValue<Vector3>("alignmentmarkercolor", new Vector3(1f, 0f, 0f)); //default: red
+		Vector3 tmp = cfg.GetValue<Vector3>("alignmentmarkercolor", new Vector3(1f, 0f, 0f)); // default: red
 		Color alignmentmarkercolor = new Color(tmp.x, tmp.y, tmp.z);
-		Vector2 alignmentmarkertexture = cfg.GetValue<Vector2>("alignmentmarkertexture", new Vector2(0f, 2f)); //default: prograde marker
+		Vector2 alignmentmarkertexture = cfg.GetValue<Vector2>("alignmentmarkertexture", new Vector2(0f, 2f)); // default: prograde marker
 		cfg.save();
 		float texturescalefactor = 1f / 3f;
 
-		//get navball object
+		// get navball object
 		GameObject navBall = GameObject.Find("NavBall");
 		Transform navBallVectorsPivotTransform = navBall.transform.FindChild("vectorsPivot");
 		navBallBehaviour = navBall.GetComponent<NavBall>();
 
-		//get indicator texture (use the prograde marker, since it has a clear 'upwards' direction)
+		// get indicator texture (use the prograde marker, since it has a clear 'upwards' direction)
 		ManeuverGizmo maneuverGizmo = MapView.ManeuverNodePrefab.GetComponent<ManeuverGizmo>();
 		ManeuverGizmoHandle maneuverGizmoHandle = maneuverGizmo.handleNormal;
 		Transform transform = maneuverGizmoHandle.flag;
 		Renderer renderer = transform.renderer;
 		Material maneuverTexture = renderer.sharedMaterial;
 
-		//create alignment indicator game object
+		// create alignment indicator game object
 		indicator = Create2DObject(
 			name: "navballalignmentindicator",
-			size: 0.025f, //the same size as all other markers
+			size: 0.025f, // the same size as all other markers
 			col: alignmentmarkercolor,
 			texture: maneuverTexture,
 			textureScale: Vector2.one * texturescalefactor,
 			textureOffset: alignmentmarkertexture * texturescalefactor,
 			parentTransform: navBallVectorsPivotTransform,
-			layer: 12 //the navball layer
+			layer: 12 // the navball layer
 		);
 	}
 
@@ -108,8 +108,9 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 
 	public void LateUpdate()
 	{
-		if(FlightGlobals.ready == false)
+		if(FlightGlobals.ready == false) {
 			return;
+		}
 
 		if(FlightGlobals.fetch != null) {
 			if(FlightGlobals.fetch.VesselTarget != null) {
@@ -118,13 +119,13 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 					Transform targetTransform = targetPort.GetTransform();
 					Transform selfTransform = FlightGlobals.ActiveVessel.ReferenceTransform;
 
-					//indicator position
+					// indicator position
 					Vector3 targetPortOutVector = targetTransform.forward.normalized;
 					Vector3 targetPortInVector = -targetPortOutVector;
 					Vector3 rotatedTargetPortInVector = navBallBehaviour.attitudeGymbal * targetPortInVector;
 					indicator.transform.localPosition = rotatedTargetPortInVector * navBallBehaviour.progradeVector.localPosition.magnitude;
 
-					//indicator rotation
+					// indicator rotation
 					Vector3 v1 = Vector3.Cross(selfTransform.up, -targetTransform.up);
 					Vector3 v2 = Vector3.Cross(selfTransform.up, selfTransform.forward);
 					float ang = Vector3.Angle(v1, v2);
@@ -133,7 +134,7 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 					}
 					indicator.transform.rotation = Quaternion.Euler(90 + ang, 90, 270);
 
-					//indicator visibility (invisible if on back half sphere)
+					// indicator visibility (invisible if on back half sphere)
 					indicator.SetActive(indicator.transform.localPosition.z > 0.0d);
 
 					return;
@@ -141,7 +142,7 @@ public class NavBallDockingAlignmentIndicator : MonoBehaviour
 			}
 		}
 
-		//no docking port is currently selected
+		// no docking port is currently selected
 		indicator.SetActive(false);
 		return;
 	}

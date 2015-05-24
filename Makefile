@@ -12,7 +12,7 @@ INSTALLDIR="$(KSP_DIR)"/GameData/$(NAME)
 $(DLL): $(SRC)
 	@test "$(KSP_DIR)" || echo 'You need to set $$KSP_DIR'
 	@test "$(KSP_DIR)"
-	dmcs -r:"$(KSP_DIR)/KSP_Data/Managed/Assembly-CSharp.dll" -r:"$(KSP_DIR)/KSP_Data/Managed/UnityEngine.dll" -t:library $(SRC) -out:$(DLL)
+	dmcs -debug -r:"$(KSP_DIR)/KSP_Data/Managed/Assembly-CSharp.dll" -r:"$(KSP_DIR)/KSP_Data/Managed/UnityEngine.dll" -t:library $(SRC) -out:$(DLL)
 
 install: $(DLL)
 	@test "$(KSP_DIR)" || echo 'You need to set $$KSP_DIR'
