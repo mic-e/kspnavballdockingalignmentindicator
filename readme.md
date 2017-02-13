@@ -1,3 +1,5 @@
+Note: This mod is out of date. It was continued [over here](https://github.com/linuxgurugamer/NavBallDockingAlignmentIndicatorCE).
+
 ### How to install
 
 Like pretty much every mod, copy the content of GameData to GameData in your KSP folder.
